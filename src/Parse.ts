@@ -33,6 +33,9 @@ import User from './ParseUser'
 import LiveQuery from './ParseLiveQuery'
 import LiveQueryClient from './LiveQueryClient'
 
+//custom imports
+import ParsePromise from './_ParsePromise'
+
 /**
  * Contains all Parse API classes and functions.
  *
@@ -80,6 +83,7 @@ interface ParseType {
   User: typeof User,
   LiveQuery?: typeof LiveQuery,
   LiveQueryClient: typeof LiveQueryClient,
+  Promise: typeof ParsePromise,
 
   initialize(applicationId: string, javaScriptKey: string): void,
   _initialize(applicationId: string, javaScriptKey: string, masterKey?: string): void,
@@ -150,6 +154,7 @@ const Parse: ParseType = {
   IndexedDB: undefined,
   Hooks: undefined,
   Parse: undefined,
+  Promise: ParsePromise,
 
   /**
    * Call this method first to set up your authentication tokens for Parse.
