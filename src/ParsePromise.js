@@ -1,30 +1,35 @@
-// var ParsePromise = function() {
-//     function ParsePromise( executor ) {
-//         this._resolved = false;
-//         this._rejected = false;
-//         this._resolvedCallbacks = [];
-//         this._rejectedCallbacks = [];
-//     }
-//     return ParsePromise;
-// }();
-
-// exports.default = ParsePromise;
-
-// _createClass3 function (Constructor, protoProps, staticProps) {
-//     if (protoProps) defineProperties(Constructor.prototype, protoProps);
-//     if (staticProps) defineProperties(Constructor, staticProps);
-//     return Constructor;
-// }
-
-//I think we can really just use Promise.resolve as a replacement...
-//something like:
+/**
+ * ===========================================================
+ * Modified ParsePromise
+ * ===========================================================
+ * 
+ * Added backwards compatability for Parse.Promise for breaking changes in v2.0.0
+ * https://github.com/parse-community/Parse-SDK-JS/blob/alpha/2.0.0.md
+ */
 
 var ParsePromise = function() {
     var promise = Object.create(Promise);
     var properties = {
         "as": {
-            value: function(...args) {
-                return Promise.resolve(...args);
+            value: function( ...args ) {
+                return Promise.resolve( ...args );
+            }
+        },
+        "when": {
+            value: function( ...args ) {
+                //Important to use spread as Promise.all only takes an array or an iterable promises
+                //Promise.when could iterate over args by default (eg. Promise.when( promise1, promise2 ) )
+                return Promise.all( [ ...args ] );
+            }
+        },
+        "error": {
+            value: function( ... args ) {
+                return Promise.reject( ...args );
+            }
+        },
+        "foo": {
+            value: function() {
+                return "bar";
             }
         }
     }
@@ -32,69 +37,10 @@ var ParsePromise = function() {
     return promise;
 }();
 
-// var ParsePromise = function() {
-//     function ParsePromise( executor ) {
-//         this._resolved = false;
-//         this._rejected = false;
-//         this._resolvedCallbacks = [];
-//         this._rejectedCallbacks = [];
-//         if(typeof executor === 'function') {
-//             console.log('executor was a function');
-//             console.log('this:', this);
-//             executor(this.resolve.bind(this), this.reject.bind(this));
-//         }
-//     }
-//     var prototypeProperties = {
-//         resolve: {
-//             value: function(...args) {
-//                 console.log('resolved with args:', ...args);
-//             }
-//         },
-//         reject: {
-//             value: function(...args) {
-//                 console.log('rejected with args:', ...args);
-//             }
-//         },
-//         then: {},
-//         always: {},
-//         done: {},
-//         fail: {},
-//         catch: {},
-//         _thenRunCallbacks: {},
-//         _continueWith: {}
-//     };
-//     var staticProperties = {
-//         is: {},
-//         as: {
-//             value: function(...args) {
-//                 var ParsePromise = new ParsePromise();
-//                 ParsePromise.resolve(...args);
-//                 return ParsePromise;
-//             }
-//         },
-//         resolve: {},
-//         error: {},
-//         reject: {},
-//         when: {},
-//         all: {},
-//         race: {},
-//         _continueWhile: {},
-//         isPromisesAPlusCompliant: {
-//             value: true
-//         },
-//         enableAPlusCompliant: {},
-//         disableAPlusCompliant: {}
-//     };
-//     Object.defineProperties(ParsePromise.prototype, prototypeProperties);
-//     Object.defineProperties(ParsePromise, staticProperties);
-//     return ParsePromise;
-// }();
-
-
 
 /**
  * ===========================================================
- * Original Implementation of ParsePromise Below
+ * End modified ParsePromise - Old implementation (1.10.2) below:
  * ===========================================================
  */
 
