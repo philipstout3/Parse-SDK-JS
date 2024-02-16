@@ -27,9 +27,9 @@ var ParsePromise = function() {
                 return Promise.reject( ...args );
             }
         },
-        "foo": {
+        "isForked": {
             value: function() {
-                return "bar";
+                return true;
             }
         }
     }
