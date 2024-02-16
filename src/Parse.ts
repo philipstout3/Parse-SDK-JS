@@ -181,7 +181,9 @@ const Parse: ParseType = {
   },
 
   _initialize(applicationId: string, javaScriptKey: string, masterKey?: string) {
-    console.log('\n\x1b[36mUsing forked parse-sdk-js branch: https://github.com/philipstout3/Parse-SDK-JS\x1b[0m\n');
+    if (process.env.PARSE_BUILD !== 'browser') {
+        console.log('\n\x1b[36mUsing forked parse-sdk-js branch: https://github.com/philipstout3/Parse-SDK-JS\x1b[0m\n');
+    }
     CoreManager.set('APPLICATION_ID', applicationId);
     CoreManager.set('JAVASCRIPT_KEY', javaScriptKey);
     CoreManager.set('MASTER_KEY', masterKey);
