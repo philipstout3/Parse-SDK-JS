@@ -16,66 +16,79 @@
 //     return Constructor;
 // }
 
-
-
+//I think we can really just use Promise.resolve as a replacement...
+//something like:
 
 var ParsePromise = function() {
-    function ParsePromise( executor ) {
-        this._resolved = false;
-        this._rejected = false;
-        this._resolvedCallbacks = [];
-        this._rejectedCallbacks = [];
-        if(typeof executor === 'function') {
-            console.log('executor was a function');
-            console.log('this:', this);
-            executor(this.resolve.bind(this), this.reject.bind(this));
+    var promise = Object.create(Promise);
+    var properties = {
+        "as": {
+            value: function(...args) {
+                return Promise.resolve(...args);
+            }
         }
     }
-    var prototypeProperties = {
-        resolve: {
-            value: function(...args) {
-                console.log('resolved with args:', ...args);
-            }
-        },
-        reject: {
-            value: function(...args) {
-                console.log('rejected with args:', ...args);
-            }
-        },
-        then: {},
-        always: {},
-        done: {},
-        fail: {},
-        catch: {},
-        _thenRunCallbacks: {},
-        _continueWith: {}
-    };
-    var staticProperties = {
-        is: {},
-        as: {
-            value: function(...args) {
-                var ParsePromise = new ParsePromise();
-                ParsePromise.resolve(...args);
-                return ParsePromise;
-            }
-        },
-        resolve: {},
-        error: {},
-        reject: {},
-        when: {},
-        all: {},
-        race: {},
-        _continueWhile: {},
-        isPromisesAPlusCompliant: {
-            value: true
-        },
-        enableAPlusCompliant: {},
-        disableAPlusCompliant: {}
-    };
-    Object.defineProperties(ParsePromise.prototype, prototypeProperties);
-    Object.defineProperties(ParsePromise, staticProperties);
-    return ParsePromise;
+    Object.defineProperties(promise, properties);
+    return promise;
 }();
+
+// var ParsePromise = function() {
+//     function ParsePromise( executor ) {
+//         this._resolved = false;
+//         this._rejected = false;
+//         this._resolvedCallbacks = [];
+//         this._rejectedCallbacks = [];
+//         if(typeof executor === 'function') {
+//             console.log('executor was a function');
+//             console.log('this:', this);
+//             executor(this.resolve.bind(this), this.reject.bind(this));
+//         }
+//     }
+//     var prototypeProperties = {
+//         resolve: {
+//             value: function(...args) {
+//                 console.log('resolved with args:', ...args);
+//             }
+//         },
+//         reject: {
+//             value: function(...args) {
+//                 console.log('rejected with args:', ...args);
+//             }
+//         },
+//         then: {},
+//         always: {},
+//         done: {},
+//         fail: {},
+//         catch: {},
+//         _thenRunCallbacks: {},
+//         _continueWith: {}
+//     };
+//     var staticProperties = {
+//         is: {},
+//         as: {
+//             value: function(...args) {
+//                 var ParsePromise = new ParsePromise();
+//                 ParsePromise.resolve(...args);
+//                 return ParsePromise;
+//             }
+//         },
+//         resolve: {},
+//         error: {},
+//         reject: {},
+//         when: {},
+//         all: {},
+//         race: {},
+//         _continueWhile: {},
+//         isPromisesAPlusCompliant: {
+//             value: true
+//         },
+//         enableAPlusCompliant: {},
+//         disableAPlusCompliant: {}
+//     };
+//     Object.defineProperties(ParsePromise.prototype, prototypeProperties);
+//     Object.defineProperties(ParsePromise, staticProperties);
+//     return ParsePromise;
+// }();
 
 
 
