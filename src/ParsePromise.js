@@ -38,7 +38,7 @@ var ParsePromise = function() {
 }();
 
 
-exports.default = ParsePromise;
+export default ParsePromise;
 
 /**
  * ===========================================================

@@ -36,7 +36,6 @@ class ParseUser extends ParseObject {
    * @param {object} attributes The initial set of data to store in the user.
    */
   constructor(attributes: ?AttributeMap) {
-    console.log('constructing user...');
     super('_User');
     if (attributes && typeof attributes === 'object') {
       if (!this.set(attributes || {})) {
