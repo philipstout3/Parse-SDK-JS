@@ -38,6 +38,8 @@ var ParsePromise = function() {
 }();
 
 
+exports.default = ParsePromise;
+
 /**
  * ===========================================================
  * End modified ParsePromise - Old implementation (1.10.2) below:
