@@ -34,7 +34,7 @@ import LiveQuery from './ParseLiveQuery'
 import LiveQueryClient from './LiveQueryClient'
 
 //custom imports
-import ParsePromise from './_ParsePromise'
+import ParsePromise from './ParsePromise'
 
 /**
  * Contains all Parse API classes and functions.

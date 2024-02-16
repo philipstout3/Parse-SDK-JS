@@ -38,9 +38,9 @@ var _createClass3 = function (Constructor, protoProps, staticProps) {
 
 var _isPromisesAPlusCompliant = true;
 
-const _ParsePromise = function() {
-    function _ParsePromise(executor) {
-        _classCallCheck3(this, _ParsePromise);
+const ParsePromise = function() {
+    function ParsePromise(executor) {
+        _classCallCheck3(this, ParsePromise);
 
         this._resolved = false;
         this._rejected = false;
@@ -715,7 +715,7 @@ const _ParsePromise = function() {
           _isPromisesAPlusCompliant = false;
         }
     }]);
-    return _ParsePromise;
+    return ParsePromise;
 }();
 
- export default _ParsePromise;
+ export default ParsePromise;
