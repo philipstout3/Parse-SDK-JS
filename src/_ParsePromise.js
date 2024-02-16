@@ -549,6 +549,7 @@ const _ParsePromise = function() {
       }, {
         key: 'all',
         value: function (promises) {
+          throw "promise.all not implemented yet"
           var total = 0;
           var objects = [];
     
@@ -557,7 +558,7 @@ const _ParsePromise = function() {
           var _iteratorError = undefined;
     
           try {
-            for (var _iterator = (0, _getIterator3.default)(promises), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            for (var _iterator = (0, _getIterator3)(promises), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
               var p = _step.value;
     
               objects[total++] = p;
@@ -630,6 +631,7 @@ const _ParsePromise = function() {
       }, {
         key: 'race',
         value: function (promises) {
+          throw 'promise.race not implemented yet';
           var completed = false;
           var promise = new ParsePromise();
           var _iteratorNormalCompletion2 = true;
@@ -637,7 +639,7 @@ const _ParsePromise = function() {
           var _iteratorError2 = undefined;
     
           try {
-            for (var _iterator2 = (0, _getIterator3.default)(promises), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            for (var _iterator2 = (0, _getIterator3)(promises), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
               var p = _step2.value;
     
               if (ParsePromise.is(p)) {
