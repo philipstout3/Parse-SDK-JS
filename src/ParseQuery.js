@@ -592,6 +592,51 @@ class ParseQuery {
     return query.withJSON(json);
   }
 
+
+  //custom code for all the callback .get() functions we have on old repo
+  legacyGet(objectId: string, options?: FullOptions): Promise<ParseObject> {
+    var successCallback = options && typeof options.success == 'function' && options.success;
+    var errorCallback = options && typeof options.error == 'function' && options.error;
+    this.equalTo('objectId', objectId);
+
+    const firstOptions = {};
+    if (options && options.hasOwnProperty('useMasterKey')) {
+      firstOptions.useMasterKey = options.useMasterKey;
+    }
+    if (options && options.hasOwnProperty('sessionToken')) {
+      firstOptions.sessionToken = options.sessionToken;
+    }
+    if (options && options.hasOwnProperty('context') && typeof options.context === 'object') {
+      firstOptions.context = options.context;
+    }
+    if (options && options.hasOwnProperty('json')) {
+      firstOptions.json = options.json;
+    }
+
+    return this.first(firstOptions).then(response => {
+      if (response) {
+        if(successCallback) {
+            return Promise.resolve(successCallback()).then(() => {
+                return Promise.resolve(response);
+            }, (error) => {
+                return Promise.reject(error);
+            })
+        }
+        return response;
+      }
+      //error case
+      const errorObject = new ParseError(ParseError.OBJECT_NOT_FOUND, 'Object not found.');
+      if(errorCallback) {
+          return Promise.resolve(errorCallback(errorObject)).then(() => {
+            return Promise.reject(errorObject);
+          }).catch(() => {
+            return Promise.reject(errorObject);
+          })
+      }
+      return Promise.reject(errorObject);
+    });
+  }
+
   /**
    * Constructs a Parse.Object whose id is already known by fetching data from
    * the server. Unlike the <code>first</code> method, it never returns undefined.
@@ -1033,6 +1078,9 @@ class ParseQuery {
    *     iteration has completed.
    */
   each(callback: (obj: ParseObject) => any, options?: BatchOptions): Promise<void> {
+    //custom code to add back success and error callbacks
+    var successCallback = options && typeof options.success == 'function' && options.success;
+    var errorCallback = options && typeof options.error == 'function' && options.error;
     return this.eachBatch(results => {
       let callbacksDone = Promise.resolve();
       results.forEach(result => {
@@ -1041,7 +1089,25 @@ class ParseQuery {
         });
       });
       return callbacksDone;
-    }, options);
+    }, options).then((completedPromise) => {
+        if(successCallback) {
+            return Promise.resolve(successCallback).then(() => {
+                return Promise.resolve();
+            }).catch((error) => {
+                return Promise.reject(error);
+            })
+        }
+        return Promise.resolve(completedPromise);
+    }).catch((error) => {
+        if(errorCallback) {
+            return Promise.resolve(errorCallback).then(() => {
+                return Promise.reject(error);
+            }).catch(() => {
+                return Promise.reject(error);
+            })
+        }
+        return Promise.reject(error);
+    })
   }
 
   /**
