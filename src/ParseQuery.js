@@ -616,8 +616,8 @@ class ParseQuery {
     return this.first(firstOptions).then(response => {
       if (response) {
         if(successCallback) {
-            return Promise.resolve(successCallback()).then(() => {
-                return Promise.resolve(response);
+            return Promise.resolve(successCallback(response)).then((cbResults) => {
+                return Promise.resolve(cbResults);
             }, (error) => {
                 return Promise.reject(error);
             })
@@ -1091,8 +1091,8 @@ class ParseQuery {
       return callbacksDone;
     }, options).then((completedPromise) => {
         if(successCallback) {
-            return Promise.resolve(successCallback).then(() => {
-                return Promise.resolve();
+            return Promise.resolve(successCallback(completedPromise)).then((successResults) => {
+                return Promise.resolve(successResults);
             }).catch((error) => {
                 return Promise.reject(error);
             })
@@ -1100,7 +1100,7 @@ class ParseQuery {
         return Promise.resolve(completedPromise);
     }).catch((error) => {
         if(errorCallback) {
-            return Promise.resolve(errorCallback).then(() => {
+            return Promise.resolve(errorCallback(error)).then(() => {
                 return Promise.reject(error);
             }).catch(() => {
                 return Promise.reject(error);
