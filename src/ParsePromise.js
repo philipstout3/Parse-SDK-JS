@@ -17,9 +17,9 @@ var ParsePromise = function() {
         },
         "when": {
             value: function( ...args ) {
-                //Important to use spread as Promise.all only takes an array or an iterable promises
+                //Important to use spread.flat() as Promise.all only takes an array or an iterable promises
                 //Promise.when could iterate over args by default (eg. Promise.when( promise1, promise2 ) )
-                return Promise.all( [ ...args ] );
+                return Promise.all( [ ...args ].flat() );
             }
         },
         "error": {
