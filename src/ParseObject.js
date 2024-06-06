@@ -554,9 +554,14 @@ class ParseObject {
     return Object.keys(keys);
   }
 
-  mockSave() {
+  mockSave(arg1, arg2, arg3) {
       //custom code added Jun 6 2024
-      console.log('mock save')
+      if(!arg2 || typeof arg2 != 'object') {
+          arg2 = {is_mock_save: true};
+      } else {
+          arg2.is_mock_save = true;
+      }
+      return this.save(arg1, arg2, arg3);
   }
 
   /**
