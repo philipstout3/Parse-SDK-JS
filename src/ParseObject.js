@@ -554,6 +554,11 @@ class ParseObject {
     return Object.keys(keys);
   }
 
+  mockSave() {
+      //custom code added Jun 6 2024
+      console.log('mock save')
+  }
+
   /**
    * Returns true if the object has been fetched.
    *
