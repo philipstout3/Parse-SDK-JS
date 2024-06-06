@@ -557,10 +557,11 @@ class ParseObject {
   mockSave(arg1, arg2, arg3) {
       //custom code added Jun 6 2024
       if(!arg2 || typeof arg2 != 'object') {
-          arg2 = {is_mock_save: true};
-      } else {
-          arg2.is_mock_save = true;
+          arg2 = {};
       }
+      var context = arg2.context || {};
+      context.is_mock_save = true;
+      arg2.context = context;
       return this.save(arg1, arg2, arg3);
   }
 
