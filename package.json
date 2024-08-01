@@ -29,12 +29,12 @@
     "react-native": false
   },
   "dependencies": {
-    "@babel/runtime-corejs3": "7.23.2",
-    "idb-keyval": "6.2.1",
-    "react-native-crypto-js": "1.0.0",
-    "uuid": "9.0.1",
-    "ws": "8.15.1",
-    "xmlhttprequest": "1.8.0"
+    "@babel/runtime-corejs3": "^7.23.2",
+    "idb-keyval": "^6.2.1",
+    "react-native-crypto-js": "^1.0.0",
+    "uuid": "^9.0.1",
+    "ws": "^8.15.1",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "@babel/core": "7.22.0",
